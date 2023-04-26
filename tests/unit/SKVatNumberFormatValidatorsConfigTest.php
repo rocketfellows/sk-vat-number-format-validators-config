@@ -57,6 +57,7 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
 
     public function getConfigValidators(): array
     {
+        $defaultValidator = $this->createMock(CountryVatFormatValidatorInterface::class);
         $validator = $this->createMock(CountryVatFormatValidatorInterface::class);
 
         return [
@@ -93,6 +94,13 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
                     $validator,
                     $validator,
                     $validator
+                ],
+            ],
+            'default validator not null and additional validators not null and empty' => [
+                'defaultValidator' => $defaultValidator,
+                'additionalValidators' => new CountryVatFormatValidators(),
+                'expectedValidators' => [
+                    $defaultValidator,
                 ],
             ],
         ];

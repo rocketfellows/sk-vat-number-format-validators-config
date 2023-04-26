@@ -10,16 +10,15 @@ use rocketfellows\CountryVatNumberFormatValidatorsConfig\CountryVatNumberFormatV
 use rocketfellows\SKVatFormatValidator\SKVatFormatValidator;
 use rocketfellows\SKVatNumberFormatValidatorsConfig\SKVatNumberFormatValidatorsConfig;
 
-/**
- * TODO: added tests or improve
- */
 class SKVatNumberFormatValidatorsConfigTest extends TestCase
 {
+    private const TESTING_CONFIG_CLASS = SKVatNumberFormatValidatorsConfig::class;
     private const EXPECTED_CONFIG_DEFAULT_VALIDATOR_CLASS = SKVatFormatValidator::class;
 
     public function testDefaultConfigInitialization(): void
     {
-        $config = new SKVatNumberFormatValidatorsConfig();
+        $configClassName = self::TESTING_CONFIG_CLASS;
+        $config = new $configClassName();
 
         $actualValidators = [];
 
@@ -43,7 +42,8 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
         ?CountryVatFormatValidators $additionalValidators,
         array $expectedValidators
     ): void {
-        $config = new SKVatNumberFormatValidatorsConfig($defaultValidator, $additionalValidators);
+        $configClassName = self::TESTING_CONFIG_CLASS;
+        $config = new $configClassName($defaultValidator, $additionalValidators);
 
         $actualValidators = [];
 
@@ -65,14 +65,14 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
                 'defaultValidator' => null,
                 'additionalValidators' => null,
                 'expectedValidators' => [
-                    new SKVatFormatValidator(),
+                    $this->getDefaultConfigValidator(),
                 ],
             ],
             'default validator null, additional validators not null and empty' => [
                 'defaultValidator' => null,
                 'additionalValidators' => new CountryVatFormatValidators(),
                 'expectedValidators' => [
-                    new SKVatFormatValidator(),
+                    $this->getDefaultConfigValidator(),
                 ],
             ],
             'default validator null, additional validators not null and not empty' => [
@@ -83,7 +83,7 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
                     $validator
                 ),
                 'expectedValidators' => [
-                    new SKVatFormatValidator(),
+                    $this->getDefaultConfigValidator(),
                     $validator,
                     $validator,
                     $validator
@@ -123,5 +123,12 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
     private function assertExpectedConfigCountry(CountryVatNumberFormatValidatorsConfigInterface $config): void
     {
         $this->assertEquals(ISO3166::SK(), $config->getCountry());
+    }
+
+    private function getDefaultConfigValidator(): CountryVatFormatValidatorInterface
+    {
+        $defaultConfigValidatorClassName = self::EXPECTED_CONFIG_DEFAULT_VALIDATOR_CLASS;
+
+        return new $defaultConfigValidatorClassName();
     }
 }

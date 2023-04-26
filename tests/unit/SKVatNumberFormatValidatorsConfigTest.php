@@ -8,6 +8,9 @@ use rocketfellows\CountryVatFormatValidatorInterface\CountryVatFormatValidatorIn
 use rocketfellows\SKVatFormatValidator\SKVatFormatValidator;
 use rocketfellows\SKVatNumberFormatValidatorsConfig\SKVatNumberFormatValidatorsConfig;
 
+/**
+ * TODO: added tests or improve
+ */
 class SKVatNumberFormatValidatorsConfigTest extends TestCase
 {
     public function testDefaultConfigInitialization(): void

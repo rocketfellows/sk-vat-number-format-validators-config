@@ -18,8 +18,13 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
             $actualValidators[] = $validator;
         }
 
-        $this->assertEquals(ISO3166::SK(), $config->getCountry());
+        $this->assertExpectedConfigCountry($config);
         $this->assertCount(1, $actualValidators);
         $this->assertInstanceOf(SKVatFormatValidator::class, $actualValidators[0]);
+    }
+
+    private function assertExpectedConfigCountry(SKVatNumberFormatValidatorsConfig $config): void
+    {
+        $this->assertEquals(ISO3166::SK(), $config->getCountry());
     }
 }

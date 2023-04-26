@@ -61,28 +61,21 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
         $validator = $this->createMock(CountryVatFormatValidatorInterface::class);
 
         return [
-            'default validator null and additional validators null' => [
+            'default validator null, additional validators null' => [
                 'defaultValidator' => null,
                 'additionalValidators' => null,
                 'expectedValidators' => [
                     new SKVatFormatValidator(),
                 ],
             ],
-            'default validator not null and additional validators null' => [
-                'defaultValidator' => $validator,
-                'additionalValidators' => null,
-                'expectedValidators' => [
-                    $validator,
-                ],
-            ],
-            'default validator null and additional validators not null and empty' => [
+            'default validator null, additional validators not null and empty' => [
                 'defaultValidator' => null,
                 'additionalValidators' => new CountryVatFormatValidators(),
                 'expectedValidators' => [
                     new SKVatFormatValidator(),
                 ],
             ],
-            'default validator null and additional validators not null and not empty' => [
+            'default validator null, additional validators not null and not empty' => [
                 'defaultValidator' => null,
                 'additionalValidators' => new CountryVatFormatValidators(
                     $validator,
@@ -96,14 +89,21 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
                     $validator
                 ],
             ],
-            'default validator not null and additional validators not null and empty' => [
+            'default validator not null, additional validators null' => [
+                'defaultValidator' => $defaultValidator,
+                'additionalValidators' => null,
+                'expectedValidators' => [
+                    $defaultValidator,
+                ],
+            ],
+            'default validator not null, additional validators not null and empty' => [
                 'defaultValidator' => $defaultValidator,
                 'additionalValidators' => new CountryVatFormatValidators(),
                 'expectedValidators' => [
                     $defaultValidator,
                 ],
             ],
-            'default validator not null and additional validators not null not empty' => [
+            'default validator not null, additional validators not null and not empty' => [
                 'defaultValidator' => $defaultValidator,
                 'additionalValidators' => new CountryVatFormatValidators(
                     $validator,

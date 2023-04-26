@@ -5,6 +5,8 @@ namespace rocketfellows\SKVatNumberFormatValidatorsConfig\tests\unit;
 use arslanimamutdinov\ISOStandard3166\ISO3166;
 use PHPUnit\Framework\TestCase;
 use rocketfellows\CountryVatFormatValidatorInterface\CountryVatFormatValidatorInterface;
+use rocketfellows\CountryVatFormatValidatorInterface\CountryVatFormatValidators;
+use rocketfellows\CountryVatNumberFormatValidatorsConfig\CountryVatNumberFormatValidatorsConfigInterface;
 use rocketfellows\SKVatFormatValidator\SKVatFormatValidator;
 use rocketfellows\SKVatNumberFormatValidatorsConfig\SKVatNumberFormatValidatorsConfig;
 
@@ -13,6 +15,8 @@ use rocketfellows\SKVatNumberFormatValidatorsConfig\SKVatNumberFormatValidatorsC
  */
 class SKVatNumberFormatValidatorsConfigTest extends TestCase
 {
+    private const EXPECTED_CONFIG_DEFAULT_VALIDATOR_CLASS = SKVatFormatValidator::class;
+
     public function testDefaultConfigInitialization(): void
     {
         $config = new SKVatNumberFormatValidatorsConfig();
@@ -25,13 +29,21 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
 
         $this->assertExpectedConfigCountry($config);
         $this->assertCount(1, $actualValidators);
-        $this->assertInstanceOf(SKVatFormatValidator::class, $actualValidators[0]);
+        $this->assertInstanceOf(self::EXPECTED_CONFIG_DEFAULT_VALIDATOR_CLASS, $actualValidators[0]);
     }
 
-    public function testSetDefaultConfigValidator(): void
-    {
-        $defaultValidator = $this->createMock(CountryVatFormatValidatorInterface::class);
-        $config = new SKVatNumberFormatValidatorsConfig($defaultValidator);
+    /**
+     * @dataProvider getConfigValidators
+     * @param CountryVatFormatValidatorInterface|null $defaultValidator
+     * @param CountryVatFormatValidators|null $additionalValidators
+     * @param CountryVatFormatValidatorInterface[] $expectedValidators
+     */
+    public function testConfigureConfigValidators(
+        ?CountryVatFormatValidatorInterface $defaultValidator,
+        ?CountryVatFormatValidators $additionalValidators,
+        array $expectedValidators
+    ): void {
+        $config = new SKVatNumberFormatValidatorsConfig($defaultValidator, $additionalValidators);
 
         $actualValidators = [];
 
@@ -40,11 +52,23 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
         }
 
         $this->assertExpectedConfigCountry($config);
-        $this->assertCount(1, $actualValidators);
-        $this->assertEquals($defaultValidator, $actualValidators[0]);
+        $this->assertEquals($expectedValidators, $actualValidators);
     }
 
-    private function assertExpectedConfigCountry(SKVatNumberFormatValidatorsConfig $config): void
+    public function getConfigValidators(): array
+    {
+        return [
+            'defaultValidator null and additionalValidators null' => [
+                'defaultValidator' => null,
+                'additionalValidators' => null,
+                'expectedValidators' => [
+                    new SKVatFormatValidator(),
+                ],
+            ],
+        ];
+    }
+
+    private function assertExpectedConfigCountry(CountryVatNumberFormatValidatorsConfigInterface $config): void
     {
         $this->assertEquals(ISO3166::SK(), $config->getCountry());
     }

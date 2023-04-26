@@ -60,28 +60,28 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
         $validator = $this->createMock(CountryVatFormatValidatorInterface::class);
 
         return [
-            'defaultValidator null and additional validators null' => [
+            'default validator null and additional validators null' => [
                 'defaultValidator' => null,
                 'additionalValidators' => null,
                 'expectedValidators' => [
                     new SKVatFormatValidator(),
                 ],
             ],
-            'defaultValidator not null and additional validators null' => [
+            'default validator not null and additional validators null' => [
                 'defaultValidator' => $validator,
                 'additionalValidators' => null,
                 'expectedValidators' => [
                     $validator,
                 ],
             ],
-            'defaultValidator null and additional validators not null and empty' => [
+            'default validator null and additional validators not null and empty' => [
                 'defaultValidator' => null,
                 'additionalValidators' => new CountryVatFormatValidators(),
                 'expectedValidators' => [
                     new SKVatFormatValidator(),
                 ],
             ],
-            'defaultValidator null and additional validators not null and not empty' => [
+            'default validator null and additional validators not null and not empty' => [
                 'defaultValidator' => null,
                 'additionalValidators' => new CountryVatFormatValidators(
                     $validator,

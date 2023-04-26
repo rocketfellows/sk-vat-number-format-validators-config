@@ -6,6 +6,7 @@ use arslanimamutdinov\ISOStandard3166\ISO3166;
 use PHPUnit\Framework\TestCase;
 use rocketfellows\CountryVatFormatValidatorInterface\CountryVatFormatValidatorInterface;
 use rocketfellows\SKVatFormatValidator\SKVatFormatValidator;
+use rocketfellows\SKVatNumberFormatValidatorsConfig\SKVatNumberFormatValidatorsConfig;
 
 class SKVatNumberFormatValidatorsConfigTest extends TestCase
 {

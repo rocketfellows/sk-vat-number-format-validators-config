@@ -103,6 +103,20 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
                     $defaultValidator,
                 ],
             ],
+            'default validator not null and additional validators not null not empty' => [
+                'defaultValidator' => $defaultValidator,
+                'additionalValidators' => new CountryVatFormatValidators(
+                    $validator,
+                    $validator,
+                    $validator
+                ),
+                'expectedValidators' => [
+                    $defaultValidator,
+                    $validator,
+                    $validator,
+                    $validator
+                ],
+            ],
         ];
     }
 

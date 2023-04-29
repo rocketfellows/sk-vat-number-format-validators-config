@@ -101,3 +101,5 @@ $config = new SKVatNumberFormatValidatorsConfig(
 // $secondAdditionalValidator - from additional tuple
 $config->getValidators();
 ```
+
+More use case examples can be found in the package's unit tests.

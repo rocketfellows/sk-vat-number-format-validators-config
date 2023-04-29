@@ -15,6 +15,25 @@ class SKVatNumberFormatValidatorsConfigTest extends TestCase
     private const TESTING_CONFIG_CLASS = SKVatNumberFormatValidatorsConfig::class;
     private const EXPECTED_CONFIG_DEFAULT_VALIDATOR_CLASS = SKVatFormatValidator::class;
 
+    public function testOverrideConfigurationDefaultValidator(): void
+    {
+        $newDefaultValidator = $this->createMock(CountryVatFormatValidatorInterface::class);
+
+        $configClassName = self::TESTING_CONFIG_CLASS;
+        $config = new $configClassName($newDefaultValidator);
+
+        $actualValidators = [];
+
+        foreach ($config->getValidators() as $validator) {
+            $actualValidators[] = $validator;
+        }
+
+        $this->assertExpectedConfigCountry($config);
+        $this->assertCount(1, $actualValidators);
+        $this->assertNotInstanceOf(self::EXPECTED_CONFIG_DEFAULT_VALIDATOR_CLASS, $actualValidators[0]);
+        $this->assertEquals($newDefaultValidator, $actualValidators[0]);
+    }
+
     public function testDefaultConfigInitialization(): void
     {
         $configClassName = self::TESTING_CONFIG_CLASS;

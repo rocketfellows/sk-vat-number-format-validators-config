@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1682767866">
-  <project timestamp="1682767866">
+<coverage generated="1682782987">
+  <project timestamp="1682782987">
     <file name="/app/src/SKVatNumberFormatValidatorsConfig.php">
       <class name="rocketfellows\SKVatNumberFormatValidatorsConfig\SKVatNumberFormatValidatorsConfig" namespace="global">
         <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="4" coveredelements="4"/>

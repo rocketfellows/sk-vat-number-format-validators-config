@@ -15,3 +15,8 @@ composer require rocketfellows/sk-vat-number-format-validators-config
 
 - https://github.com/rocketfellows/specific-country-vat-number-format-validators-config v1.0.0;
 - https://github.com/rocketfellows/sk-vat-format-validator v1.0.0;
+
+## References
+
+- https://github.com/rocketfellows/country-vat-format-validator-interface
+- https://github.com/arslanim/iso-standard-3166
